@@ -30,20 +30,35 @@ const mostBlogs = (blogs) => {
     if (blogs.length === 0) {
         return null
     }
-    const blogCount = _.countBy(blogs, 'author')
-    const countPairs = _.toPairs(blogCount)
-    const prolificAuthor = _.maxBy(countPairs, 1)
-    
-    const mostBlogsObject = {
-        author: prolificAuthor[0],
-        blogs: prolificAuthor[1]
+
+    const mostBlogs = _(blogs)
+        .countBy('author')
+        .toPairs()
+        .maxBy(1)
+
+    return {author: mostBlogs[0], blogs: mostBlogs[1]}
+}
+
+const mostLikes = (blogs) => {
+    if (blogs.length === 0) {
+        return null
     }
-    return mostBlogsObject
+    const totalAuthorLikes = _(blogs)
+        .groupBy('author')
+        .map((blog, author) => ({
+            author: author,
+            likes: _.sumBy(blog, 'likes') 
+        }))
+        .orderBy('likes', ['desc'])
+        .value()
+
+    return totalAuthorLikes[0]
 }
 
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }
