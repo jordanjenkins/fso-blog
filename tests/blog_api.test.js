@@ -28,11 +28,34 @@ test('all blogs are returned', async () => {
     expect(response.body).toHaveLength(helper.listWithManyBlogs.length)
 })
 
-test.only('unique identifier is named id', async () => {
+test('unique identifier is named id', async () => {
     const response = await api.get('/api/blogs')
     response.body.forEach(blog => {
         expect(blog.id).toBeDefined()
     })
+})
+
+test.only('blog is successfully added to mongodb', async () => {
+    const newBlog = {
+        title: 'Breaking Ice',
+        author: 'Mike Vasovsky',
+        url: 'www.mikey.com',
+        likes: 14,
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length + 1)
+
+    const contents = blogsAtEnd.map(b => b.title)
+    expect(contents).toContain(
+        'Breaking Ice'
+    )
 })
 
 afterAll(() => {
