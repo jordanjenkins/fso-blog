@@ -58,7 +58,7 @@ test('blog is successfully added to mongodb', async () => {
     )
 })
 
-test.only('if likes are missing during POST, default to 0', async () => {
+test('if likes are missing during POST, default to 0', async () => {
     const newBlog = {
         title: 'The New Blog',
         author: 'Jordan Jenkins',
@@ -74,6 +74,21 @@ test.only('if likes are missing during POST, default to 0', async () => {
     const blogsAtEnd = await helper.blogsInDb()
     const blogLikes = blogsAtEnd.map(b => b.likes)
     expect(blogLikes.at(-1)).toBe(0)
+})
+
+test.only('a blog with missing info is not added', async () => {
+    const newBlog = {
+        author: 'Jordan Jenkins',
+        likes: 55,
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length)
 })
 
 afterAll(() => {
