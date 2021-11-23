@@ -23,9 +23,16 @@ test('blogs are returned as JSON', async () => {
         .expect('Content-Type', /application\/json/)
 }, 100000)
 
-test.only('all blogs are returned', async () => {
+test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(helper.listWithManyBlogs.length)
+})
+
+test.only('unique identifier is named id', async () => {
+    const response = await api.get('/api/blogs')
+    response.body.forEach(blog => {
+        expect(blog.id).toBeDefined()
+    })
 })
 
 afterAll(() => {
