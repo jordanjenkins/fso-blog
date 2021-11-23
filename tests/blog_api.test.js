@@ -35,7 +35,7 @@ test('unique identifier is named id', async () => {
     })
 })
 
-test.only('blog is successfully added to mongodb', async () => {
+test('blog is successfully added to mongodb', async () => {
     const newBlog = {
         title: 'Breaking Ice',
         author: 'Mike Vasovsky',
@@ -56,6 +56,24 @@ test.only('blog is successfully added to mongodb', async () => {
     expect(contents).toContain(
         'Breaking Ice'
     )
+})
+
+test.only('if likes are missing during POST, default to 0', async () => {
+    const newBlog = {
+        title: 'The New Blog',
+        author: 'Jordan Jenkins',
+        url: 'www.jordan.com',
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const blogLikes = blogsAtEnd.map(b => b.likes)
+    expect(blogLikes.at(-1)).toBe(0)
 })
 
 afterAll(() => {
