@@ -76,8 +76,25 @@ test('if likes are missing during POST, default to 0', async () => {
     expect(blogLikes.at(-1)).toBe(0)
 })
 
-test.only('a blog with missing info is not added', async () => {
+test.only('a blog with missing title is not added', async () => {
     const newBlog = {
+        author: 'Jordan Jenkins',
+        url: 'myurl.com',
+        likes: 55,
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length)
+})
+
+test.only('a blog with missing url is not added', async () => {
+    const newBlog = {
+        title: "Blog Title",
         author: 'Jordan Jenkins',
         likes: 55,
     }
