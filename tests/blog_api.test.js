@@ -33,7 +33,7 @@ describe('Initially, some blogs are saved', () => {
 })
 
 describe('Viewing a specific blog', () => {
-  test.only('A specific blog can be viewed', async () => {
+  test('A specific blog can be viewed', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToView = blogsAtStart[0]
 
@@ -46,7 +46,7 @@ describe('Viewing a specific blog', () => {
     expect(resultBlog.body).toEqual(processedBlogToView)
   })
 
-  test.only('If blog does not exist, send 404', async () => {
+  test('If blog does not exist, send 404', async () => {
     const validNonExistingId = await helper.nonExistingId()
 
     await api
@@ -54,7 +54,7 @@ describe('Viewing a specific blog', () => {
       .expect(404)
   })
 
-  test.only('If id is not valid, send 400', async () => {
+  test('If id is not valid, send 400', async () => {
     const invalidId = '5a3d5da59070081a82a3445'
 
     await api
@@ -154,6 +154,29 @@ describe('Deleting a blog', () => {
     )
   })
 })
+
+describe('Updating a blog', () => {
+  test.only('Update a blogs likes', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const updatedBlogLikes = {
+      ...blogToUpdate,
+      likes: blogToUpdate.likes + 1
+    }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedBlogLikes)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const updatedLikes = blogsAtEnd.map(b => b.likes)
+    expect(updatedLikes[0]).toBe(blogToUpdate.likes + 1)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
