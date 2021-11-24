@@ -32,6 +32,37 @@ describe('Initially, some blogs are saved', () => {
   })
 })
 
+describe('Viewing a specific blog', () => {
+  test.only('A specific blog can be viewed', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToView = blogsAtStart[0]
+
+    const resultBlog = await api
+      .get(`/api/blogs/${blogToView.id}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const processedBlogToView = JSON.parse(JSON.stringify(blogToView))
+    expect(resultBlog.body).toEqual(processedBlogToView)
+  })
+
+  test.only('If blog does not exist, send 404', async () => {
+    const validNonExistingId = await helper.nonExistingId()
+
+    await api
+      .get(`/api/blogs/${validNonExistingId}`)
+      .expect(404)
+  })
+
+  test.only('If id is not valid, send 400', async () => {
+    const invalidId = '5a3d5da59070081a82a3445'
+
+    await api
+      .get(`/api/blogs/${invalidId}`)
+      .expect(400)
+  })
+})
+
 describe('Addition of a new blog', () => {
   test('blog is successfully added to mongodb', async () => {
     const newBlog = {
@@ -108,7 +139,7 @@ describe('Addition of a new blog', () => {
 })
 
 describe('Deleting a blog', () => {
-  test.only('a blog can be deleted', async () => {
+  test('a blog can be deleted', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
 
