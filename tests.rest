@@ -3,20 +3,21 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "My 2nd Blog",
+    "title": "My 4th Blog",
     "author": "Jordan J",
     "url": "the url",
     "likes": 1
 }
 
 ###
-GET http://localhost:3003/api/blogs
+GET http://localhost:3003/api/users
 
 ###
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-    "author": "Jordan J",
-    "likes": 1
+    "username": "root",
+    "name": "SuperUser",
+    "password": "password"
 }
