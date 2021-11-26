@@ -4,6 +4,7 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 
+const User = require('../models/user')
 const Blog = require('../models/blog')
 
 beforeEach(async () => {
@@ -156,7 +157,7 @@ describe('Deleting a blog', () => {
 })
 
 describe('Updating a blog', () => {
-  test.only('Update a blogs likes', async () => {
+  test('Update a blogs likes', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToUpdate = blogsAtStart[0]
 
@@ -174,6 +175,36 @@ describe('Updating a blog', () => {
     const blogsAtEnd = await helper.blogsInDb()
     const updatedLikes = blogsAtEnd.map(b => b.likes)
     expect(updatedLikes[0]).toBe(blogToUpdate.likes + 1)
+  })
+})
+
+describe('There is initially one user in the Db', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+    const user = new User({ username: 'root', password: 'secret' })
+    await user.save()
+  })
+
+  test.only('creation of new user succeeds', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      username: 'testuser',
+      name: 'Test User',
+      password: 'testtest'
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+
+    const usernames = usersAtEnd.map(u => u.username)
+    expect(usernames).toContain(newUser.username)
   })
 })
 
