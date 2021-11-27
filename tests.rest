@@ -1,7 +1,7 @@
 ###
 POST http://localhost:3003/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYTE4YTI1ZDUyNDYyMjllZjZmOTk0NCIsImlhdCI6MTYzNzk3Nzk4NywiZXhwIjoxNjM3OTgxNTg3fQ.iMJqBi2_HwHrilHz3v4Zuzr-DuWFqz34vJjHpskwNlg
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYTE4YTI1ZDUyNDYyMjllZjZmOTk0NCIsImlhdCI6MTYzNzk4MjE0NSwiZXhwIjoxNjM3OTg1NzQ1fQ.zk4TgW5bHnP8Y9dY3SBf6CgpmfVMKQCfckzUk92MnYA
 
 {
     "title": "Blog 4",
@@ -28,11 +28,11 @@ POST  http://localhost:3003/api/login
 content-type: application/json
 
 {
-    "username": "testuser",
-    "password": "testtest"
+    "username": "root",
+    "password": "password"
 }
 
 ###
-DELETE http://localhost:3003/api/blogs/61a19044304c6fd3969e0b92
+DELETE http://localhost:3003/api/blogs/61a19e38ad9e649ed407442e
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWQiOiI2MWExOGEwNmQ1MjQ2MjI5ZWY2Zjk5M2YiLCJpYXQiOjE2Mzc5NzkwOTIsImV4cCI6MTYzNzk4MjY5Mn0.QYo84egWO0Yv73yuCqnQXo9vGPSDq2BDh_atxAtXLiI
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYTE4YTI1ZDUyNDYyMjllZjZmOTk0NCIsImlhdCI6MTYzNzk4MTc3MiwiZXhwIjoxNjM3OTg1MzcyfQ.kfoGD2XnWQ7Lv5MG7pjzwKvJllvrXUA8eJf-USXZ-d4
