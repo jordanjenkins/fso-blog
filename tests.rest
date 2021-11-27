@@ -1,12 +1,13 @@
 ###
 POST http://localhost:3003/api/blogs
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxYTE4YTI1ZDUyNDYyMjllZjZmOTk0NCIsImlhdCI6MTYzNzk3NjYxNiwiZXhwIjoxNjM3OTgwMjE2fQ.2bcOQzKCBBe43pGinBXSQZZ4U-QXa4tn70dYZjCJ0E8
 
 {
-    "title": "My 4th Blog",
-    "author": "Jordan J",
+    "title": "Blog 3",
+    "author": "Craft J",
     "url": "the url",
-    "likes": 1
+    "likes": 4
 }
 
 ###
@@ -18,7 +19,7 @@ content-type: application/json
 
 {
     "username": "root",
-    "name": "SuperUser",
+    "name": "superuser",
     "password": "password"
 }
 
