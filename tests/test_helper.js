@@ -1,5 +1,6 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
+//const api = supertest(api)
 
 const listWithOneBlog = [
   {
@@ -67,10 +68,16 @@ const usersInDb = async () => {
   return users.map(u => u.toJSON())
 }
 
+const user = {
+  username: 'jordan123',
+  password: 'jordan123'
+}
+
 module.exports = {
   listWithOneBlog,
   listWithManyBlogs,
   blogsInDb,
   nonExistingId,
-  usersInDb
+  usersInDb,
+  user
 }
